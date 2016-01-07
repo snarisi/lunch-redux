@@ -1,0 +1,23 @@
+state
+    group: {
+        _id: string
+        name: string
+        location: [lat, lng]
+    },
+    options {
+        exclusions: [String]
+        all: [{
+            name: String
+            categories: [{
+                id: [String]
+                display: [String]
+            }]
+            location: {
+                address: [String]
+                coordinates: [lat, lng]
+            }
+            rating: Number
+        }]
+        remaining: [index pointing to option.all]
+        top: index pointing to option.all
+    }
