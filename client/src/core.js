@@ -1,4 +1,5 @@
 import { List, Map, fromJS, toJS } from 'immutable';
+import request from 'superagent';
 // import Promise from 'bluebird';
 
 export function setState(currentState = Map(), data) {
