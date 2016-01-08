@@ -1,25 +1,38 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { setState } from './actions';
+import { toJS } from 'immutable';
 
-import makeStore from './store';
 import reducer from './reducer';
-import {AppContainer} from './components/App';
+import {App} from './components/App';
+import { setState, getState, dispatch, updater } from './store';
 
-export const store = makeStore(reducer);
-
-// store.dispatch({
-//     type: 'NEW_GROUP',
+//
+// setState(getState(), {
 //     group: {
-//         "name": "Jerks",
-//         "location": [40.7285206,-73.99025879999999]
-//     }
+//         name: 'Sam is the best',
+//         id: 69,
+//         location: [69, -69]
+//     },
+//     exclusions: {}
 // });
 
+dispatch({
+    type: 'SET_STATE',
+    data: {
+        group: {
+            name: 'Sam is the best',
+            id: 69,
+            location: [69, -69]
+        },
+        exclusions: {}
+    }
+});
+
+let appState = getState();
+updater.on('update', () => appState = getState());
+
 render(
-    <Provider store={store}>
-        <AppContainer />
-    </Provider>,
+    <App things={appState}/>,
     document.getElementById('mount-point')
 );

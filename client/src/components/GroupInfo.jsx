@@ -9,9 +9,10 @@ export default React.createClass({
             return <li key={key}>{exclusions[key]}</li>
         });
 
+        console.log('rendering GroupInfo');
         return (
             <div>
-                <h1>{this.props.name}</h1>
+                <h1>{this.props.group.get('name')}</h1>
                 <ul>Current Exclusions:
                     {currentExclusions}
                 </ul>

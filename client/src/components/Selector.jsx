@@ -1,8 +1,11 @@
 import React from 'react';
 import { store } from '../index.jsx';
 import { List, Map, toJS } from 'immutable';
+import { dispatch } from '../store';
 
 export default React.createClass({
+    // mixins: [PureRender],
+
     getCategories: function () {
         if (!this.props.allOptions) return;
 
@@ -16,6 +19,10 @@ export default React.createClass({
         return allCats;
     },
 
+    shouldComponentUpdate: function (nextProps, nextState) {
+        return nextProps.allOptions !== this.props.allOptions;
+    },
+
     makeList: function () {
         if (!this.props.allOptions) return;
         let categories = this.getCategories();
@@ -27,7 +34,7 @@ export default React.createClass({
                     value={id}
                     key={id}
                     onClick={() => {
-                        store.dispatch({
+                        dispatch({
                             type: 'EXCLUDE',
                             category: newExclusion
                         })
@@ -39,6 +46,7 @@ export default React.createClass({
     },
 
     render: function () {
+        console.log('Rendering Selector');
         return (
             <div>
                 <h1>Selector</h1>

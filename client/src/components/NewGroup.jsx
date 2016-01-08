@@ -1,4 +1,5 @@
 import React from 'react';
+import { dispatch } from '../store';
 
 export default React.createClass({
     groupName: '',
@@ -18,8 +19,9 @@ export default React.createClass({
                     onChange={this.watchForm}
                 />
                 <button
-                    onClick={() => this.props.newGroup({
-                        name: this.groupName
+                    onClick={() => dispatch({
+                        type: 'NEW_GROUP',
+                        group: { name: this.groupName }
                     })}>
                     Submit
                 </button>
