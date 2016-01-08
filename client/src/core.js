@@ -27,20 +27,15 @@ export function getTopOption (currentOptions) {
     );
 }
 
-export function filterOptions (currentState) {
-    const exclusions = List.of('mexican');
-    const allOptions = currentState.getIn(['options', 'all'])
+export function filterOptions (allOptions = List(), exclusions = Map()) {
 
-    const remaining = currentState.getIn(['options', 'remaining']).filterNot(i => {
-        return allOptions.get(i).get('categories').some(cat => {
-            return exclusions.includes(cat.get('id'));
+    const remaining = allOptions.filterNot(option => {
+        return option.get('categories').some(cat => {
+            return exclusions.has(cat.get('id'));
         })
     });
 
-    return currentState.setIn(
-        ['options', 'remaining'],
-        remaining
-    );
+    return remaining;
 }
 
 export const INITIAL_STATE = Map();

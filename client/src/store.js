@@ -7,7 +7,6 @@ let state = Map();
 export const updater = new EventEmitter();
 
 export const setState = function (current = state, data) {
-    console.log(data);
     state = current.merge(fromJS(data));
     updater.emit('update', fromJS(data));
     return state;

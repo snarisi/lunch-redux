@@ -1,5 +1,4 @@
 import React from 'react';
-import { store } from '../index.jsx';
 import { List, Map, toJS } from 'immutable';
 import { dispatch } from '../store';
 
@@ -36,6 +35,7 @@ export default React.createClass({
                     onClick={() => {
                         dispatch({
                             type: 'EXCLUDE',
+                            id: this.props.id,
                             category: newExclusion
                         })
                     }}>
