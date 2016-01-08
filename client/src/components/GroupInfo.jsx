@@ -1,10 +1,14 @@
 import React from 'react';
+import { Map, List, toJS } from 'immutable';
 
 export default React.createClass({
     render: function () {
-        let currentExclusions = (this.props.exclusions) ?
-        this.props.exclusions.map(exclusion => <li key={exclusion}>{exclusion}</li>) :
-        [];
+        let exclusions = this.props.exclusions || Map();
+        exclusions = exclusions.toJS();
+        console.log(exclusions);
+        let currentExclusions = Object.keys(exclusions).map(key => {
+            return <li key={key}>{exclusions[key]}</li>
+        });
 
         return (
             <div>

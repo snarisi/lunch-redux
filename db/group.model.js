@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var schema = new Schema({
     name: { type: String },
     location: [Number],
-    exclusions: { type: [String], default: [] },
+    exclusions: { type: Schema.Types.Mixed, default: {} },
     closed: { type: Boolean, default: false }
 });
 

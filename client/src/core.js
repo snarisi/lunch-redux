@@ -7,8 +7,6 @@ export function setState(currentState = Map(), data) {
 }
 
 export function exclude (current, category) {
-    console.log('current', current);
-
     if (current.get('exclusions').has(category.id)) {
         return current;
     }

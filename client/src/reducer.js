@@ -17,6 +17,7 @@ export default function reducer (state = INITIAL_STATE, action) {
                 .send(action.group)
                 .end(function (err, res) {
                     if (err) return console.error(err);
+                    console.log(res.body)
                     return store.dispatch({
                         type: 'SET_STATE',
                         data: res.body
