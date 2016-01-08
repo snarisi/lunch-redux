@@ -27,7 +27,10 @@ export default React.createClass({
                     value={id}
                     key={id}
                     onClick={() => {
-                        this.props.exclude(newExclusion);
+                        store.dispatch({
+                            type: 'EXCLUDE',
+                            category: newExclusion
+                        })
                     }}>
                     {categories[id]}
                 </li>
@@ -36,7 +39,6 @@ export default React.createClass({
     },
 
     render: function () {
-        console.log('current state: ', store.getState());
         return (
             <div>
                 <h1>Selector</h1>

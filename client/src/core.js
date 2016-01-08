@@ -11,7 +11,13 @@ export function exclude (current, category) {
         return current;
     }
 
-    return current.mergeIn(['exclusions'], fromJS(category));
+    request.put('/api/groups')
+        .send({ exclusions: category })
+        .end(function (err, res) {
+            console.log(res);
+            if (err) return console.error(err);
+            return current.mergeIn(['exclusions'], fromJS(res.body));
+        });
 }
 
 export function getTopOption (currentOptions) {

@@ -16,4 +16,23 @@ router.post('/', function (req, res, next) {
         .then(null, next);
 });
 
+router.put('/', function (req, res, next) {
+    console.log(req.body);
+
+    if (req.body.exclusions) {
+        Group.findOne()
+            .then(group => {
+                console.log(group);
+                Object.keys(req.body.exclusions).forEach(key => {
+                    group.exclusions[key] = req.body.exclusions[key];
+                });
+                return group.save()
+            })
+            .then(group => {
+                res.send(group.exclusions);
+            })
+            .then(null, next);
+    }
+})
+
 export default router;
