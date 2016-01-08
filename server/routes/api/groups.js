@@ -8,6 +8,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
+    console.log(req.body);
     Group.create(req.body)
         .then(group => {
             res.send(group.format());

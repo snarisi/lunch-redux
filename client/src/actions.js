@@ -11,3 +11,10 @@ export function newGroup (group) {
         group: group
     };
 }
+
+export function exclude (category) {
+    return {
+        type: 'EXCLUDE',
+        category: category
+    }
+}

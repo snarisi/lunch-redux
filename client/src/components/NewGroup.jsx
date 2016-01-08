@@ -18,7 +18,9 @@ export default React.createClass({
                     onChange={this.watchForm}
                 />
                 <button
-                    onClick={() => this.props.newGroup(this.groupName)}>
+                    onClick={() => this.props.newGroup({
+                        name: this.groupName
+                    })}>
                     Submit
                 </button>
             </div>

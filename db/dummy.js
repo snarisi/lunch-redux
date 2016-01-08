@@ -4,7 +4,10 @@ module.exports = {
         "name": "Test Group",
         "location": [40.702789, -74.006187]
     },
-    "exclusions": ["mexican", "burgers"]
+    "exclusions": {
+        "mexican": "Mexican",
+        "burgers": "Burgers"
+    }
 }
 
 // module.exports = {

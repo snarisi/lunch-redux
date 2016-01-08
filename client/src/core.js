@@ -6,11 +6,14 @@ export function setState(currentState = Map(), data) {
     return currentState.merge(fromJS(data));
 }
 
-export function exclude (currentState, category) {
-    return currentState.set(
-        'exclusions',
-        currentState.get('exclusions').push(category)
-    );
+export function exclude (current, category) {
+    console.log('current', current);
+
+    if (current.get('exclusions').has(category.id)) {
+        return current;
+    }
+
+    return current.mergeIn(['exclusions'], fromJS(category));
 }
 
 export function getTopOption (currentOptions) {
