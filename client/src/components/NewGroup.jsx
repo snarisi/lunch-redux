@@ -1,8 +1,23 @@
 import React from 'react';
-import { dispatch } from '../store';
+import createBroswerHistory from 'history/lib/createBrowserHistory';
+import { dispatch, updater, getState } from '../store';
+
+const history = createBroswerHistory();
 
 export default React.createClass({
     groupName: '',
+
+    contextTypes: {
+        history: React.PropTypes.object.isRequired
+    },
+
+    componentWillMount: function () {
+        updater.on('update', function (updates) {
+            const id = updates.getIn(['group', '_id']);
+            console.log(getState());
+            history.push('/#/group/' + id);
+        })
+    },
 
     watchForm: function (event) {
         this.groupName = event.target.value;
@@ -19,10 +34,21 @@ export default React.createClass({
                     onChange={this.watchForm}
                 />
                 <button
-                    onClick={() => dispatch({
-                        type: 'NEW_GROUP',
-                        group: { name: this.groupName }
-                    })}>
+                    onClick={() => {
+                        navigator.geolocation.getCurrentPosition(pos => {
+                            dispatch({
+                                type: 'NEW_GROUP',
+                                group: {
+                                    name: this.groupName,
+                                    location: [
+                                        pos.coords.latitude,
+                                        pos.coords.longitude
+                                    ]
+                                }
+                            });
+                        });
+                    }
+                }>
                     Submit
                 </button>
             </div>

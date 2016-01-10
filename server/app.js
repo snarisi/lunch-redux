@@ -23,6 +23,7 @@ app.get('/*', function (req, res, next) {
 
 app.use(function (err, req, res, next) {
     err.status = err.status || 500;
+    console.error(err);
     res.status(err.status).send(err.message);
 })
 

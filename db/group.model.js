@@ -8,7 +8,7 @@ var schema = new Schema({
     closed: { type: Boolean, default: false }
 });
 
-schema.methods.format = function () {
+schema.methods.format = function (yelpResults) {
     return {
         group: {
             _id: this._id,
@@ -17,7 +17,7 @@ schema.methods.format = function () {
         },
         exclusions: this.exclusions,
         options: {
-            all: require('./dummyyelp.js'),
+            all: yelpResults,
             remaining: [],
             top: null
         }

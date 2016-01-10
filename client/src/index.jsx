@@ -8,12 +8,9 @@ import { setState, getState, dispatch, updater } from './store';
 dispatch({
     type: 'SET_STATE',
     data: {
-        group: {
-            name: 'Sam is the best',
-            id: 69,
-            location: [69, -69]
-        },
-        exclusions: {}
+        group: {},
+        exclusions: {},
+        options: {}
     }
 });
 

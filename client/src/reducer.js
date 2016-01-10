@@ -1,4 +1,4 @@
-import { setState } from './store';
+import { setState, getState } from './store';
 import { Map, fromJS } from 'immutable';
 import request from 'superagent';
 
@@ -21,6 +21,7 @@ export default function reducer (state = INITIAL_STATE, action) {
                 });
             break;
         case 'NEW_GROUP':
+            setState(state, {group: { name: action.group.name }});
             request.post('/api/groups')
                 .send(action.group)
                 .end(function (err, res) {

@@ -11,9 +11,8 @@ export default React.createClass({
 
     render: function () {
         console.log('Rendering Top Choice');
-        console.log(this.getTopOption());
         let top = this.getTopOption();
-        let name = top ? top.get('name') : 'None';
+        let name = top ? top.get('name') : 'Waiting for Yelp...';
         return (
             <div>
                 <h1>Current Top Choice</h1>
