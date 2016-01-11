@@ -36,6 +36,14 @@ export default function reducer (state = INITIAL_STATE, action) {
                     return setState(state, res.body);
                 })
             break;
+        case 'CLOSE_VOTING':
+            request.put('/api/groups')
+                .send({ closed:true })
+                .end(function (err, res) {
+                    if (err) return console.error(err);
+                    return setState(state, res.body);
+                });
+            break;
         default:
             return state;
     }

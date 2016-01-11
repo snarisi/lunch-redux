@@ -20,7 +20,8 @@ schema.methods.format = function (yelpResults) {
             all: yelpResults,
             remaining: [],
             top: null
-        }
+        },
+        closed: this.closed
     }
 }
 

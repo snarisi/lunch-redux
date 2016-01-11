@@ -5,44 +5,40 @@ import { yelp, formatResults, yelpCache } from '../../utils/yelp';
 
 const router = express.Router();
 
+router.param('id', function (req, res, next, id) {
+    Group.findById(id)
+        .then(group => {
+            if (!group) {
+                const err = new Error('Not found');
+                err.status = 404;
+                return next(err);
+            }
+            req.group = group;
+            next();
+        })
+        .then(null, next);
+});
+
 router.get('/', function (req, res, next) {
     res.send('Groups');
 });
 
 router.get('/:id', function (req, res, next) {
-    // const findGroup = Group.findById(req.params.id);
-    // const searchYelp = yelp.search({
-    //     term: 'food',
-    //     ll: group.location
-    //
-    // });
-    //
-    // Promise.all([findGroup, searchYelp])
-    //     .spread((group, results) => {
-    //         res.send(group.format(formatResults(results)));
-    //     });
-
-    let group;
-
-    Group.findById(req.params.id)
-        .then(foundGroup => {
-            group = foundGroup;
-            if (yelpCache[group._id]) {
-                return yelpCache[group._id];
-            } else {
-                return yelp.search({
-                    term: 'food',
-                    ll: group.location.join(',')
-                });
-            }
+    if (yelpCache[req.group._id]) {
+        console.log(req.group);
+        res.send(req.group.format(yelpCache[req.group._id]));
+    } else {
+        yelp.search({
+            term: 'food',
+            ll: req.group.location.join(',')
         })
         .then(results => {
-            console.log(yelpCache);
-            yelpCache[group._id] = results;
-            res.send(group.format(formatResults(results)));
-        })
-        .then(null, next);
-})
+            yelpCache[req.group._id] = formatResults(results);
+            console.log(req.group.format(results));
+            res.send(req.group.format(formatResults(results)));
+        });
+    }
+});
 
 router.post('/', function (req, res, next) {
     console.log(req.body);
@@ -73,6 +69,12 @@ router.put('/:id', function (req, res, next) {
                 res.send(group.exclusions);
             })
             .then(null, next);
+    } else if (req.body.closed) {
+        req.group.closed = req.body.closed;
+        req.group.save()
+            .then(group => {
+                res.send({ closed: group.closed });
+            })
     }
 })
 

@@ -33,6 +33,7 @@ export default React.createClass({
 
     render: function () {
         console.log('Rendering Group Info');
+        console.log('state: ', this.state)
         return (
             <div>
                 <h1>{this.state.group.get('name')}</h1>
