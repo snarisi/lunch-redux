@@ -1,6 +1,6 @@
 import React from 'react';
-import { Map, List, toJS } from 'immutable';
-import { dispatch, updater, getState } from '../store';
+import { Map, List, toJS, fromJS } from 'immutable';
+import { dispatch, updater, getState, setState } from '../store';
 import Selector from './Selector';
 import Exclusions from './Exclusions';
 import TopChoice from './TopChoice';
@@ -19,6 +19,22 @@ export default React.createClass({
     },
 
     componentWillMount: function () {
+        const socket = io.connect(window.location.href);
+
+        socket.emit('room', this.props.params.id);
+
+        socket.on('connect', function () {
+            console.log('i am connected');
+        });
+
+        socket.on('update', function (data) {
+            console.log('updates from socket: ', data);
+            dispatch({
+                type: 'SET_STATE',
+                data: data
+            })
+        });
+
         updater.on('update', (updates) => {
             this.setState(mapStateToProps(updates));
         });

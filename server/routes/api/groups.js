@@ -1,7 +1,10 @@
 import express from 'express';
 import Promise from 'bluebird';
+import { fromJS } from 'immutable';
 import { Group } from '../../../db';
 import { yelp, formatResults, yelpCache } from '../../utils/yelp';
+import { io } from '../../app.js';
+// const io = require('../../app');
 
 const router = express.Router();
 
@@ -62,11 +65,9 @@ router.put('/:id', function (req, res, next) {
                 return group.save();
             })
             .then(group => {
-                return Group.findById(req.params.id)
-            })
-            .then(group => {
-                console.log('after: ', group);
-                res.send(group.exclusions);
+                // console.log(io.to);
+                io.to(group._id).emit('update', { exclusions: group.exclusions });
+                res.json(group.exclusions);
             })
             .then(null, next);
     } else if (req.body.closed) {

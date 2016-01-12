@@ -5,11 +5,12 @@ import { toJS } from 'immutable';
 import {App} from './components/App';
 import { setState, getState, dispatch, updater } from './store';
 
-const socket = io.connect(window.location.href);
-
-socket.on('connect', function () {
-    console.log('i am connected');
-});
+// const socket = io.connect(window.location.href);
+//
+// socket.on('connect', function () {
+//     console.log('i am connected');
+// });
+// console.log('SOCKET', socket);
 
 dispatch({
     type: 'SET_STATE',
@@ -26,3 +27,5 @@ render(
     <App things={appState}/>,
     document.getElementById('mount-point')
 );
+
+// export { socket };

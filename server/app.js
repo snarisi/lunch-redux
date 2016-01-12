@@ -37,4 +37,9 @@ app.use(function (err, req, res, next) {
 
 io.on('connection', function (socket) {
     console.log('socket connected');
+    socket.on('room', function (room) {
+        socket.join(room);
+    });
 });
+
+export { io };
