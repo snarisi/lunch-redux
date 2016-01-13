@@ -28,8 +28,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/:id', function (req, res, next) {
     if (yelpCache[req.group._id]) {
-        console.log(req.group);
-        res.send(req.group.format(yelpCache[req.group._id]));
+        res.send(req.group.format(yelpCache[req.group._id], req.sessionID));
     } else {
         yelp.search({
             term: 'food',
@@ -37,17 +36,19 @@ router.get('/:id', function (req, res, next) {
         })
         .then(results => {
             yelpCache[req.group._id] = formatResults(results);
-            console.log(req.group.format(results));
-            res.send(req.group.format(formatResults(results)));
+            console.log(req.group.format(results), req.sessionID);
+            res.send(req.group.format(formatResults(results), req.sessionID));
         });
     }
 });
 
 router.post('/', function (req, res, next) {
-    console.log(req.body);
-    Group.create(req.body)
+    console.log(req.sessionID);
+    const newGroup = req.body;
+    newGroup.admin = req.sessionID;
+    Group.create(newGroup)
         .then(group => {
-            res.send(group.format());
+            res.send(group.format(null, req.sessionID));
         })
         .then(null, next);
 });

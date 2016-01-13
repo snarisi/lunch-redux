@@ -21,6 +21,7 @@ export default function reducer (state = INITIAL_STATE, action) {
                 });
             break;
         case 'NEW_GROUP':
+            console.log('posting');
             setState(state, {group: { name: action.group.name }});
             request.post('/api/groups')
                 .send(action.group)

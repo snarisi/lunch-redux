@@ -35,6 +35,7 @@ export default React.createClass({
                 />
                 <button
                     onClick={() => {
+                        console.log('clicked');
                         navigator.geolocation.getCurrentPosition(pos => {
                             dispatch({
                                 type: 'NEW_GROUP',
@@ -46,7 +47,7 @@ export default React.createClass({
                                     ]
                                 }
                             });
-                        });
+                        }, err => console.error(err));
                     }
                 }>
                     Submit

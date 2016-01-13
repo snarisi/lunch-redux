@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import socketio from 'socket.io';
 import api from './routes/api';
+import session from 'express-session';
 
 const app = express();
 const server = http.Server(app);
@@ -13,6 +14,10 @@ const port = process.env.PORT || 8000;
 server.listen(port, () => {
     console.log('Server listening on port ', port);
 });
+
+app.use(session({
+    secret: 'lunch'
+}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

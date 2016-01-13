@@ -9,7 +9,8 @@ function mapStateToProps (state) {
     let map = {};
     if (state.get('group')) map.group = state.get('group');
     if (state.get('exclusions')) map.exclusions = state.get('exclusions');
-    if (state.get('options')) map.allOptions = state.get('options').get('all')
+    if (state.get('options')) map.allOptions = state.get('options').get('all');
+    map.isAdmin = state.get('isAdmin');
     return map;
 }
 
